@@ -5,6 +5,6 @@ For each passenger i you pick up, you earn endi - starti + tipi dollars. You may
 Given n and rides, return the maximum number of dollars you can earn by picking up the passengers optimally.
 Note: You may drop off a passenger and pick up a different passenger at the same point.
 
-Input: n = 5, rides = [[2,5,4],[1,5,1]]
-Output: 7
-Explanation: We can pick up passenger 0 to earn 5 - 2 + 4 = 7 dollars.
+ - Input: n = 5, rides = [[2,5,4],[1,5,1]]
+ - Output: 7
+ - Explanation: We can pick up passenger 0 to earn 5 - 2 + 4 = 7 dollars.
