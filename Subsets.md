@@ -4,7 +4,7 @@ Finding all the subsets or patterns of a given set of numbers
 
 1) > Find all subsets with one or more elements from a given array
    
-   Input - [1,5,3]
+   Input - [1,5,3] <br />
    Output - [[], [1], [5], [1,5], [3], [1,3], [5,3], [1,5,3]]
 
    - Start from 0th index and recur by choosing and unchoosing each item.
@@ -28,14 +28,14 @@ Finding all the subsets or patterns of a given set of numbers
    
 2) > Given a set of numbers that might contain duplicates, find all of its distinct subsets.
 
-   Input - [1, 5, 3, 3]
+   Input - [1, 5, 3, 3] <br />
    Output - [[], [1], [3], [1,3], [3,3], [1,3,3]]
 
    -----------------------------------------------------------------------------------------------
 
 3) > Given a set of distinct numbers, find all of its permutations.
 
-   Input - [1,2,3]
+   Input - [1,2,3] <br />
    Output - [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
 
    - Iterate over the array from 0 to n.
@@ -68,7 +68,7 @@ Finding all the subsets or patterns of a given set of numbers
 
 4) > Given a string, find all of its permutations preserving the character sequence but changing case.
 
-   Input - "a1b2"
+   Input - "a1b2" <br />
    Output: ["a1b2","a1B2","A1b2","A1B2"]
 
    - Add input in the list of results
@@ -113,7 +113,7 @@ Finding all the subsets or patterns of a given set of numbers
   
 5) > Given an expression containing digits and operations (+, -, *), find all possible ways in which the expression can be evaluated by grouping the numbers and operators using parentheses.
 
-   Input: expression = "2-1-1"
+   Input: expression = "2-1-1" <br />
    Output: [0,2]
 
    - Iterate over the array from 0 to n.
