@@ -24,12 +24,14 @@ Finding all the subsets or patterns of a given set of numbers
            subsets(nums, n+1, list, res);
        }
    ````
-2) > Given a set of numbers that might contain duplicates, find all of its distinct subsets.
+   -----------------------------------------------------------------------------------------------
+   
+3) > Given a set of numbers that might contain duplicates, find all of its distinct subsets.
 
    Input - [1, 5, 3, 3]
    Output - [[], [1], [3], [1,3], [3,3], [1,3,3]]
 
-3) > Given a set of distinct numbers, find all of its permutations.
+4) > Given a set of distinct numbers, find all of its permutations.
 
    Input - [1,2,3]
    Output - [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
@@ -60,7 +62,7 @@ Finding all the subsets or patterns of a given set of numbers
     }
    ````
 
-4) > Given a string, find all of its permutations preserving the character sequence but changing case.
+5) > Given a string, find all of its permutations preserving the character sequence but changing case.
 
    Input - "a1b2"
    Output: ["a1b2","a1B2","A1b2","A1B2"]
@@ -103,7 +105,7 @@ Finding all the subsets or patterns of a given set of numbers
     }
    ````
   
-5) > Given an expression containing digits and operations (+, -, *), find all possible ways in which the expression can be evaluated by grouping the numbers and operators using parentheses.
+6) > Given an expression containing digits and operations (+, -, *), find all possible ways in which the expression can be evaluated by grouping the numbers and operators using parentheses.
 
    Input: expression = "2-1-1"
    Output: [0,2]
@@ -157,6 +159,6 @@ Finding all the subsets or patterns of a given set of numbers
     }
    ````
 
-6) > Given a number n, write a function to return all structurally unique Binary Search Trees (BST) that can store values 1 to n?
+7) > Given a number n, write a function to return all structurally unique Binary Search Trees (BST) that can store values 1 to n?
 
    This can be same way as mentioned in point number 5. By splitting left and right half. Solving for them separately. And then combining at the results.
