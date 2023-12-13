@@ -1,11 +1,11 @@
 #Interview Question Patterns
 
-1) > There are n points on a road you are driving your taxi on. The n points on the road are labeled from 1 to n in the direction you are going, and you want to drive from point 1 to point n to make money by picking up passengers. You cannot change the direction of the taxi.
-The passengers are represented by a 0-indexed 2D integer array rides, where rides[i] = [starti, endi, tipi] denotes the ith passenger requesting a ride from point starti to point endi who is willing to give a tipi dollar tip.
-For each passenger i you pick up, you earn endi - starti + tipi dollars. You may only drive at most one passenger at a time.
-Given n and rides, return the maximum number of dollars you can earn by picking up the passengers optimally.
+1) > There are n points on a road you are driving your taxi on. The n points on the road are labeled from 1 to n in the direction you are going, and you want to drive from point 1 to point n to make money by picking up passengers. <br /> You cannot change the direction of the taxi. <br />
+The passengers are represented by a 0-indexed 2D integer array rides, where rides[i] = [starti, endi, tipi] denotes the ith passenger requesting a ride from point starti to point endi who is willing to give a tipi dollar tip.<br />
+For each passenger i you pick up, you earn endi - starti + tipi dollars. You may only drive at most one passenger at a time.<br />
+Given n and rides, return the maximum number of dollars you can earn by picking up the passengers optimally.<br />
 
-Note: You may drop off a passenger and pick up a different passenger at the same point.
+Note: You may drop off a passenger and pick up a different passenger at the same point.<br />
 
 **Input** : n = 5, rides = [[2,5,4],[1,5,1]] <br />
 **Output** : 7 <br />
