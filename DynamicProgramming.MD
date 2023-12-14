@@ -74,9 +74,9 @@ private boolean canPartition(int[] nums, int currSum, int i, Boolean[][] memo){
 -------------------
 3) > Given a rod of length n, we are asked to cut the rod and sell the pieces in a way that will maximize the profit. We are also given the price of every piece of length i where 1 <= i <= n.
 
-**Lengths**: [1, 2, 3, 4, 5]
-**Prices**: [2, 6, 7, 10, 13]
-**Rod Length**: 5
+**Lengths**: [1, 2, 3, 4, 5] <br />
+**Prices**: [2, 6, 7, 10, 13] <br />
+**Rod Length**: 5 <br />
 
 - This problem can be divided in sub-problems by cutting the rod at each index and solving for remaining rod.
 - In this case if you cut rod at 1 then remaining problem becomes prices[0] + cutRod(prices, n - i - 1)
@@ -103,3 +103,41 @@ private static int rodCutting(int[] prices, int n) {
     }
 ````
 ------------
+4) > Given a number array to represent different coin denominations and a total amount T, we need to find the minimum number of coins needed to make a change for T. We can assume an infinite supply of coins, therefore, each coin can be chosen multiple times.
+
+**Input**: coins = [1,2,5], amount = 11 <br />
+**Output**: 3 <br />
+**Explanation**: 11 = 5 + 5 + 1 <br />
+
+- Iterate through each coin starting from 0.
+- For each coin we either include that coin in solution or we don't by recuring for each coice.
+- Compute the solution for each recursion and them return the minimum of each of them.
+- Handle the case where for invalide case result may be -1 and hence it may not give desired solution.
+
+**Code** : 
+````java
+private int coinChange(int[] coins, int amount, int coin, int dp[][]){
+        
+        if(amount == 0){
+            return 0;
+        }
+
+        if(coin >= coins.length || amount < 0){
+            return Integer.MAX_VALUE;
+        }
+        
+        if(dp[coin][amount] != -1){
+            return dp[coin][amount];
+        }
+
+        int currCoinCount = Integer.MAX_VALUE;
+        int usingCoin = coinChange(coins, amount - coins[coin], coin, dp);
+        if(usingCoin != Integer.MAX_VALUE){
+            currCoinCount = usingCoin + 1;
+        }
+        int notUsingCoint = coinChange(coins, amount, coin+1, dp);
+        dp[coin][amount] =  Math.min(currCoinCount, notUsingCoint);
+        return dp[coin][amount];
+    }
+````
+---------
