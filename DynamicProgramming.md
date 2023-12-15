@@ -174,41 +174,140 @@ private int minJumps(int[] nums, int i){
 ---------
 6) > You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps. <br /><br />
 
-        You can either start from the step with index 0, or the step with index 1. <br /> <br />
-        
-        Return the minimum cost to reach the top of the floor.
-        
-        **Input**: cost = [10,15,20] <br />
-        **Output**: 15 <br />
-        **Explanation**: You will start at index 1.Pay 15 and climb two steps to reach the top.The total cost is 15. <br />
-        
-        - We can either start from 0th index or 1st index. So our start can be 0 or 1.
-        - From start position we can either take 1 step or 2 step.
-        - Get the min for both the above two choices.
-        - Add the fee for current position in the min value calculated above.
-        - If start position goes beyong total number of steps then result 1.
-        - Use dp[currentPost] to keep track of duplicate problems.
-        
-        **Code** :
-        ````java
-        //Start from either 0th step or first step. Get min of that
-        return Math.min(minCostClimbingStairs(cost, 0, dp), minCostClimbingStairs(cost, 1, dp));
-        
-        private int minCostClimbingStairs(int[] cost, int i, int[] dp){
-        
-                if(i >= cost.length){
-                    return 0;
-                }
-        
-                if(dp[i] != -1){
-                    return dp[i] ;
-                }
-        
-                // For each step add the cost of current step and recur for 1 step or 2 step from current step
-                // Store the minimum cost of both the steps
-                dp[i] = cost[i] + Math.min(minCostClimbingStairs(cost, i+1, dp), minCostClimbingStairs(cost, i+2, dp));
-                return dp[i];
-            }
-        ````
+You can either start from the step with index 0, or the step with index 1. <br /> <br />
+
+Return the minimum cost to reach the top of the floor.
+
+**Input**: cost = [10,15,20] <br />
+**Output**: 15 <br />
+**Explanation**: You will start at index 1.Pay 15 and climb two steps to reach the top.The total cost is 15. <br />
+
+- We can either start from 0th index or 1st index. So our start can be 0 or 1.
+- From start position we can either take 1 step or 2 step.
+- Get the min for both the above two choices.
+- Add the fee for current position in the min value calculated above.
+- If start position goes beyong total number of steps then result 1.
+- Use dp[currentPost] to keep track of duplicate problems.
+
+**Code** :
+````java
+//Start from either 0th step or first step. Get min of that
+return Math.min(minCostClimbingStairs(cost, 0, dp), minCostClimbingStairs(cost, 1, dp));
+
+private int minCostClimbingStairs(int[] cost, int i, int[] dp){
+
+        if(i >= cost.length){
+            return 0;
+        }
+
+        if(dp[i] != -1){
+            return dp[i] ;
+        }
+
+        // For each step add the cost of current step and recur for 1 step or 2 step from current step
+        // Store the minimum cost of both the steps
+        dp[i] = cost[i] + Math.min(minCostClimbingStairs(cost, i+1, dp), minCostClimbingStairs(cost, i+2, dp));
+        return dp[i];
+    }
+````
 -------
 7) > Given a sequence, find the length of its Longest Palindromic Subsequence (LPS). In a palindromic subsequence, elements read the same backward and forward.
+
+**Input**: s = "bbbab" <br />
+**Output**: 4 <br />
+**Explanation**: One possible longest palindromic subsequence is "bbbb". <br />
+
+- We can start from both the sides as start and end.
+- If both characters match we add 2 and then solve for subproblem of start+1 and end-1;
+- If both characters do not match then we have two choices to solve for (start+1, end) or (start, end-1)
+- Return the maximum of both the subproblems as result.
+- If start > end then return 0.
+- Store subproblem as dp[start][end]
+
+````java
+private int maxPalidromicSeq1(String s, int start, int end, int[][] dp) {
+        if(start > end){
+            return 0;
+        }
+        if(start == end){
+            return 1;
+        }
+        if(dp[start][end] != 0){
+            return dp[start][end];
+        }
+        //If the characters at both ends are same the increament the palidrome size by 2 and recur remaining characters
+        if(s.charAt(start) == s.charAt(end)){
+            dp[start][end] = 2 + maxPalidromicSeq1(s, start+1, end - 1, dp);
+            return dp[start][end];
+        }
+        dp[start][end] = Math.max(maxPalidromicSeq1(s, start+1, end, dp), 
+                                  maxPalidromicSeq1(s, start, end-1, dp));
+        return dp[start][end];
+    }
+````
+------------
+8) > Given a string, find the length of its Longest Palindromic Substring (LPS). In a palindromic string, elements read the same backward and forward.
+
+   **Input**: s = "babad" <br />
+   **Output**: "bab" <br />
+   **Explanation**: "aba" is also a valid answer. <br />
+
+- For each character starting from index 0 recur (start = i, end = i) for odd length palindromes
+- And recur for (start = i, end = i+1) for even length palindromes
+- For each substring starting at start and ending at end expand till characters are matching or start and end are within bounds to find out if it is palindrome.
+- Return length of palindrome as (end-1)-(start+1) + 1 = end - start - 1
+- Return the maximum of both subproblems as result.
+
+**Code** :
+````java
+String result = "";
+        int max = Integer.MIN_VALUE;
+        for(int i = 0;i<s.length()-1;i++){
+            String str1 = isPalindrome(s, i, i);
+            String str2 = isPalindrome(s, i, i+1);
+            if(str1.length() > str2.length() && str1.length() > max){
+                max = str1.length();
+                result = str1;
+            }
+            else {
+                result = str2;
+            }
+        }
+        return result;
+````
+--------
+9) > Given a string, find the minimum number of characters that we can remove/insert to make it a palindrome.
+
+   - Find Longest palindromic subsequence and substract it from the length of string.
+   - This will give correct result for minimum deletions required or minimum insertions required.
+  
+   **Code** :
+   ````java
+   return s.length() - longestPalindromicSubseq(s, 0, s.length()-1, dp);
+
+    public int longestPalindromicSubseq(String s, int start, int end, int[][] dp){ 
+        
+        if(start > end){
+            return 0;
+        }
+        if(start == end){
+            return 1;
+        }
+
+        if(dp[start][end] != -1){
+            return dp[start][end];
+        }
+
+        if(s.charAt(start) == s.charAt(end)){
+            dp[start][end] = 2 + longestPalindromicSubseq(s, start+1, end-1, dp);
+            return dp[start][end];
+        }
+
+        int includeStart = longestPalindromicSubseq(s, start, end-1, dp);
+        int includeEnd = longestPalindromicSubseq(s, start + 1, end, dp);
+        dp[start][end] = Math.max(includeStart, includeEnd);
+        return dp[start][end];
+    }
+   ````
+   ---------
+10) > 
