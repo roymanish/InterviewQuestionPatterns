@@ -356,6 +356,7 @@ String result = "";
     - To transform str1 into str2, we need to delete everything from str1 which is not part of LCS, so minimum deletions we need to perform from str1 => length1 - c1
     - Similarly, we need to insert everything in str1 which is present in str2 but not part of LCS, so minimum insertions we need to perform in str1 => length2 - c1
 
+    **Code** :
     ````java
     int longestCommonSubsequence(String S1, String S2, int i, int j, int[][] dp) {
         if(i<0 || j<0){
