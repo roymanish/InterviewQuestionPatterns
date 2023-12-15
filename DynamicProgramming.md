@@ -141,3 +141,74 @@ private int coinChange(int[] coins, int amount, int coin, int dp[][]){
     }
 ````
 ---------
+5) > Given an array of positive numbers, where each element represents the max number of jumps that can be made forward from that element, write a program to find the minimum number of jumps needed to reach the end of the array (starting from the first element). If an element is 0, then we cannot move through that element.
+
+**Input**: {2,1,1,1,4} <br />
+**Output** = 3 <br />
+**Explanation**: Starting from index '0', we can reach the last index through: 0->2->3->4 <br />
+
+- Starting from every position try to reach the end from current+1 to end.
+- Here current+1 to end is the subproblem which we want to solve for.
+- Add one if the result is not MAX_VALUE and keep track of min.
+- If currentPosition goes beyond end position then return 0.
+- Keep track on min for every starting position 1 to n.
+- Use memoization to to avoid duplicate subproblems
+
+**Code** : 
+````java
+private int minJumps(int[] nums, int i){
+
+        if(i >= nums.length-1) {
+            return 0;
+        }
+
+        int minWays = Integer.MAX_VALUE;
+        for(int j = 1;j<=nums[i]; j++){
+           int minJumps = minJumps(nums, i+j);
+           if(minJumps != Integer.MAX_VALUE)
+                minWays = Math.min(minJumps + 1, minWays);
+        }
+        return minWays;
+    }
+````
+---------
+6) > You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps. <br /><br />
+
+        You can either start from the step with index 0, or the step with index 1. <br /> <br />
+        
+        Return the minimum cost to reach the top of the floor.
+        
+        **Input**: cost = [10,15,20] <br />
+        **Output**: 15 <br />
+        **Explanation**: You will start at index 1.Pay 15 and climb two steps to reach the top.The total cost is 15. <br />
+        
+        - We can either start from 0th index or 1st index. So our start can be 0 or 1.
+        - From start position we can either take 1 step or 2 step.
+        - Get the min for both the above two choices.
+        - Add the fee for current position in the min value calculated above.
+        - If start position goes beyong total number of steps then result 1.
+        - Use dp[currentPost] to keep track of duplicate problems.
+        
+        **Code** :
+        ````java
+        //Start from either 0th step or first step. Get min of that
+        return Math.min(minCostClimbingStairs(cost, 0, dp), minCostClimbingStairs(cost, 1, dp));
+        
+        private int minCostClimbingStairs(int[] cost, int i, int[] dp){
+        
+                if(i >= cost.length){
+                    return 0;
+                }
+        
+                if(dp[i] != -1){
+                    return dp[i] ;
+                }
+        
+                // For each step add the cost of current step and recur for 1 step or 2 step from current step
+                // Store the minimum cost of both the steps
+                dp[i] = cost[i] + Math.min(minCostClimbingStairs(cost, i+1, dp), minCostClimbingStairs(cost, i+2, dp));
+                return dp[i];
+            }
+        ````
+-------
+7) > Given a sequence, find the length of its Longest Palindromic Subsequence (LPS). In a palindromic subsequence, elements read the same backward and forward.
