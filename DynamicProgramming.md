@@ -310,4 +310,69 @@ String result = "";
     }
    ````
    ---------
-10) > 
+10) > Given two strings str1 and str2, find the length of the longest subsequence which is common in both the strings.
+
+    **Input**: text1 = "abcde", text2 = "ace" <br />
+    **Output**: 3  <br />
+    **Explanation**: The longest common subsequence is "ace" and its length is 3. <br />
+
+    - Start from last index in both the string.
+    - If the characters match then increment count by 1 and recur for remaining string
+    - If the characters do not match then choose either the current index for first string or first character of 2nd string and recur for both.
+    - Result will be max of both the recursion results.
+    - Use memoization for optimization
+    - If either of the index becomes less than 0 then return 0
+
+    **Code** :
+    ````java
+    int longestCommonSubsequence(String S1, String S2, int i, int j, int[][] dp) {
+        if(i<0 || j<0){
+            return 0;
+        }
+        
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        if(S1.charAt(i) == S2.charAt(j)){
+            dp[i][j] = 1 + longestCommonSubsequence(S1, S2, i-1, j-1, dp);
+        }
+        else {
+            dp[i][j] = Math.max(longestCommonSubsequence(S1, S2, i-1, j, dp), longestCommonSubsequence(S1, S2, i, j-1, dp));
+        }
+        return dp[i][j];
+    }
+    ````
+    ------
+11) > Given strings str1 and str2, we need to transform str1 into str2 by deleting and inserting characters. Write a function to calculate the count of the minimum number of deletion and insertion operations.
+
+    ````js
+    Input: str1 = "abc"
+    str2 = "fbc"
+    Output: 1 deletion and 1 insertion.
+    Explanation: We need to delete {'a'} and insert {'f'} to str1 to transform it into str2.
+    ````
+    - Let’s assume length1 is the length of str1 and length2 is the length of str2.
+    - Now let’s assume c1 is the length of LCS of the two strings str1 and str2.
+    - To transform str1 into str2, we need to delete everything from str1 which is not part of LCS, so minimum deletions we need to perform from str1 => length1 - c1
+    - Similarly, we need to insert everything in str1 which is present in str2 but not part of LCS, so minimum insertions we need to perform in str1 => length2 - c1
+
+    ````java
+    int longestCommonSubsequence(String S1, String S2, int i, int j, int[][] dp) {
+        if(i<0 || j<0){
+            return 0;
+        }
+        
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        if(S1.charAt(i) == S2.charAt(j)){
+            dp[i][j] = 1 + longestCommonSubsequence(S1, S2, i-1, j-1, dp);
+        }
+        else {
+            dp[i][j] = Math.max(longestCommonSubsequence(S1, S2, i-1, j, dp), longestCommonSubsequence(S1, S2, i, j-1, dp));
+        }
+        return dp[i][j];
+    }
+    ````
+    ---------
+    
