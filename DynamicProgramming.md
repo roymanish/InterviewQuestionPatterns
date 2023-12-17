@@ -6,6 +6,7 @@ For each passenger i you pick up, you earn endi - starti + tipi dollars. You may
 Given n and rides, return the maximum number of dollars you can earn by picking up the passengers optimally.<br />
 Note: You may drop off a passenger and pick up a different passenger at the same point.<br />
 
+
 **Input** : n = 5, rides = [[2,5,4],[1,5,1]] <br />
 **Output** : 7 <br />
 **Explanation** : We can pick up passenger 0 to earn 5 - 2 + 4 = 7 dollars. <br />
@@ -376,4 +377,108 @@ String result = "";
     }
     ````
     ---------
+
+12) > Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+    ````js
+    Input: nums = [10,9,2,5,3,7,101,18]
+    Output: 4
+    Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+    ````
+
+    - This problem can be solved by calculating the LIS of each subarray in a recursive way
+    - Start with two pointers prevIdx = -1 and currIdx = 0
+    - If prevIdx is less than currIdx then add one and compute LIS recursively for remaining number of elements.
+    - If the condition is not true then skip the current element and compute for remaining.
+    - Final result is max of result of both choices
+    - If curr == nums.length then return 0.
+    - Use dp[currIdx][[prev+1] to store reursion result and optimization.
+   
+    **Code** :
+    ````java
+    private int lengthOfLIS(int[] nums, int currIdx, int prevIdx, int[][] dp) {
+
+        if(currIdx == nums.length){
+            return 0;
+        }
+
+        if(dp[currIdx][prevIdx+1] != -1){
+            return dp[currIdx][prevIdx+1];
+        }
+        int count1 = 0;
+        if(prevIdx == -1 || nums[currIdx] > nums[prevIdx]){
+            count1 = 1 + lengthOfLIS(nums, currIdx+1, currIdx, dp);
+        }
+
+        int count2 = lengthOfLIS(nums, currIdx+1, prevIdx, dp);
+        
+        dp[currIdx][prevIdx+1] = Math.max(count1, count2);
+        return dp[currIdx][prevIdx+1];
+    }
+    ````
+    ---------
+13) > Given a sequence, find the length of its longest repeating subsequence (LRS). A repeating subsequence will be the one that appears at least twice in the original sequence and is not overlapping (i.e. none of the corresponding characters in the repeating subsequences have the same index).
+        ````js
+        Input: “t o m o r r o w”
+        Output: 2
+        Explanation: The longest repeating subsequence is “or” {tomorrow}.
+        ````
+        - Similar to LCS problem, only in this case we need to make sure whenever char at two index match then index should not be same.
+       
+        **Code** :
+        ````java
+        int longestCommonSubsequence(String S1, String S2, int i, int j, int[][] dp) {
+                if(i<0 || j<0){
+                    return 0;
+                }
+                
+                if(dp[i][j] != -1){
+                    return dp[i][j];
+                }
+                //Additional check for non overlapping condition
+                if(i!=j && S1.charAt(i) == S2.charAt(j)){
+                    dp[i][j] = 1 + longestCommonSubsequence(S1, S2, i-1, j-1, dp);
+                }
+                else {
+                    dp[i][j] = Math.max(longestCommonSubsequence(S1, S2, i-1, j, dp), longestCommonSubsequence(S1, S2, i, j-1, dp));
+                }
+                return dp[i][j];
+        }
+        ````
+        -----
+14) > Given a string and a pattern, write a method to count the number of times the pattern appears in the string as a subsequence.
+
+    ````js
+    Input: string: “baxmx”, pattern: “ax”
+    Output: 2
+    Explanation: {baxmx, baxmx}.
+    ````
+
+    - Start with 0th index of both substrings.
+    - If both chars match then recursively check for rest of the substring in both the strings.
+              - We will not add 1 to the recursion as we are not calculating the length of result but the count of result. We only need to return 1 when result if found.
+    - If characters do not match then only move the first string to next character and recur for next char of first string and 0th of 2nd string.
+    - Final result is sum of the result of both the recursions
+    - If 2nd string is finished before first i.e str2Idx == str2.length() then return 1 as we have found on occurence of str2 in str1.
+    - If str1 finishes before then return 0 as no result was found.
+
+    **Code** :
+    ````java
+    if(str2Idx == S2.length()){
+            return 1;
+        }
+        
+        if(str1Idx == S1.length()) {
+            return 0;
+        }
+        
+        int count1 = 0;
+        if(S1.charAt(str1Idx) == S2.charAt(str2Idx)){
+            count1 = countWays(S1, S2, str1Idx+1, str2Idx+1);
+        }
+        int count2 = countWays(S1, S2, str1Idx+1, str2Idx);
+        return count1+count2;
+    ````
+    ------
+15) > 
     
