@@ -418,15 +418,16 @@ String result = "";
     ````
     ---------
 13) > Given a sequence, find the length of its longest repeating subsequence (LRS). A repeating subsequence will be the one that appears at least twice in the original sequence and is not overlapping (i.e. none of the corresponding characters in the repeating subsequences have the same index).
-        ````js
+    
+    ````js
         Input: “t o m o r r o w”
         Output: 2
         Explanation: The longest repeating subsequence is “or” {tomorrow}.
-        ````
-        - Similar to LCS problem, only in this case we need to make sure whenever char at two index match then index should not be same.
+    ````
+    - Similar to LCS problem, only in this case we need to make sure whenever char at two index match then index should not be same.
        
-        **Code** :
-        ````java
+    **Code** :
+    ````java
         int longestCommonSubsequence(String S1, String S2, int i, int j, int[][] dp) {
                 if(i<0 || j<0){
                     return 0;
@@ -444,9 +445,10 @@ String result = "";
                 }
                 return dp[i][j];
         }
-        ````
-        -----
-14) > Given a string and a pattern, write a method to count the number of times the pattern appears in the string as a subsequence.
+    ````
+        
+    -----
+15) > Given a string and a pattern, write a method to count the number of times the pattern appears in the string as a subsequence.
 
     ````js
     Input: string: “baxmx”, pattern: “ax”
@@ -455,7 +457,7 @@ String result = "";
     ````
 
     - Start with 0th index of both substrings.
-    - If both chars match then recursively check for rest of the substring in both the strings.
+    - If both chars match then recursively check for rest of the substring in both the strings. <br/>
               - We will not add 1 to the recursion as we are not calculating the length of result but the count of result. We only need to return 1 when result if found.
     - If characters do not match then only move the first string to next character and recur for next char of first string and 0th of 2nd string.
     - Final result is sum of the result of both the recursions
@@ -480,5 +482,153 @@ String result = "";
         return count1+count2;
     ````
     ------
-15) > 
+16) > Given a number sequence, find the length of its Longest Bitonic Subsequence (LBS). A subsequence is considered bitonic if it is monotonically increasing and then monotonically decreasing.
+
+    ````js
+    Input: {4,2,3,6,10,1,12}
+    Output: 5
+    Explanation: The LBS is {2,3,6,10,1}.
+    ````
+
+    - Iterate from 0th to end in for loop.
+    - For each index compute the Longest Descreasing Subsequence(LDS) to the left and to the right.
+    - The final result will be max sum of LDS from left and right for all indexes.
+   
+    **Code** :
+    ````java
+    public int LongestBitonicSequence(int[] nums)
+    {
+        
+        
+        int maxLen = Integer.MIN_VALUE;
+        for(int i = 0;i<nums.length;i++){
+            
+            maxLen = Math.max(maxLen, findLDS(nums, -1, i)+findLDSReverse(nums, -1, i)-1);
+        }
+        return maxLen;
+    }
     
+    int findLDS(int[] nums, int prev, int curr){
+        
+        if(curr == nums.length){
+            return 0;
+        }
+        
+        int countWithCurr = 0;
+        if(prev == -1 || nums[curr] < nums[prev]){
+            countWithCurr = 1 + findLDS(nums, curr, curr+1);
+        }
+        
+        int countWithoutCurr = findLDS(nums, prev, curr+1);
+        return Math.max(countWithCurr, countWithoutCurr);
+    }
+    
+    int findLDSReverse(int[] nums, int prev, int curr){
+        
+        if(curr < 0){
+            return 0;
+        }
+        
+        int countWithCurr = 0;
+        if(prev == -1 || nums[curr] < nums[prev]){
+            countWithCurr = 1 + findLDSReverse(nums, curr, curr-1);
+        }
+        
+        int countWithoutCurr = findLDSReverse(nums, prev, curr-1);
+        return Math.max(countWithCurr, countWithoutCurr);
+    }
+    ````
+    ------
+17) > Given strings s1 and s2, we need to transform s1 into s2 by deleting, inserting, or replacing characters. Write a function to calculate the count of the minimum number of edit operations.
+
+    ````js
+    Input: s1 = "bat"
+    s2 = "but"
+    Output: 1
+    Explanation: We just need to replace 'a' with 'u' to transform s1 to s2.
+    ````
+
+    - Start with 0th index of both the strings.
+    - If the chars at current index match then no modification is required. We can just increment both the indexes
+    - If they do not match then there are three options :
+      - Insert a character : In this case we will only increment the 2nd index as inserted character will always match.
+      - Delete a character : In this case we will move index1 to the next character to match.
+      - Update a character : In this case we will move both the indexes as both chars will match after update.
+    - Final result in minimum of result of above 3 recursions.
+    - If either of the indexes reach limit then return the remaining index of other string
+
+    **Code** :
+    ````java
+    int len1 = word1.length();
+        int len2 = word2.length();
+
+        if(len1 == 0) {
+            return len2;
+        }
+
+        if(len2 == 0){
+            return len1;
+        }
+
+        String key = word1+"-"+word2;
+        if(memo.get(key) != null){
+            return memo.get(key);
+        }
+
+        if(word1.charAt(len1-1) == word2.charAt(len2-1)){
+            memo.put(key, minDistance(word1.substring(0,len1-1), word2.substring(0,len2-1), memo));
+        }
+        else{
+            memo.put(key, 1 + Math.min(minDistance(word1.substring(0,len1), word2.substring(0,len2-1), memo),
+                            Math.min(minDistance(word1.substring(0,len1-1), word2.substring(0,len2), memo),
+                                     minDistance(word1.substring(0,len1-1), word2.substring(0,len2-1), memo))));
+        }
+        return memo.get(key);
+    ````
+    ------
+18) > Given three strings m, n, and p, write a method to find out if p has been formed by interleaving m and n. p would be considered interleaving m and n if it contains all the letters from m and n and the order of letters is preserved too.
+
+    ````js
+    Input: m="abd", n="cef", p="abcdef"
+    Output: true
+    Explanation: 'p' contains all the letters from 'm' and 'n' and preserves their order too. 
+    ````
+    - Start 3 pointers from start of each string
+    - If currIdx of str1 matches with currIdx of str3 then recur for remaining chars of both the string by incrementing both the indexes
+    - If currIdx of str2 matches with currIdx of str3 then recur for remaining chars of both the string by incrementing both the indexes
+    - Final result if || of above two recursion results.
+    - If length of s3 is not equal to s1+s2 then return false.
+    - If at any point all 3 indexes have reached their limit then return true as we have successfully traversed all chars of all strings
+    - If at any point 3rd index reaches its limit then return false because there may be remaining chars in s1 and s2.
+   
+    **Code** :
+    ````java
+    private boolean isInterleave(String s1, String s2, String s3, int i, int j, int k, Map<String, Boolean> dp){
+
+        if(k == s3.length() && i == s1.length() && j == s2.length()){
+            return true;
+        }
+
+        if(k == s3.length()) {
+            return false;
+        }
+
+        String key = i+"-"+j+"-"+k;
+        if(dp.get(key) != null){
+            return dp.get(key);
+        }
+
+        boolean result1 = false;
+        if(i < s1.length() && s1.charAt(i) == s3.charAt(k)){
+            result1 = isInterleave(s1, s2, s3, i+1, j, k+1, dp);
+        }
+
+        boolean result2 = false;
+        if(j < s2.length() &&  k < s3.length()  && s2.charAt(j) == s3.charAt(k)){
+            result2 = isInterleave(s1, s2, s3, i, j+1, k+1, dp);
+        }
+
+        dp.put(key, result1 || result2);
+        return dp.get(key);
+    }
+    ````
