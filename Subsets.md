@@ -1,4 +1,4 @@
-# InterviewQuestionPatterns
+# Subsets Patterns
 
 Finding all the subsets or patterns of a given set of numbers
 
