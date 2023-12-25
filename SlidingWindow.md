@@ -288,3 +288,42 @@
         return contrMap1.equals(contrMap2);
     }
    ````
+7) > Given an array of positive integers nums and a positive integer target, return the minimal length of a 
+subarray whose sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+
+   ````js
+   Input: target = 7, nums = [2,3,1,2,4,3]
+   Output: 2
+   Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+   ````
+
+   - Start two pointers windowStart and windowEnd from 0th index.
+   - Choose the element at windowEnd in the sum.
+   - Keep expanding till sum < target and add all elements in sum.
+   - while sum >= target contract the window i.e windowStart++ and reduce the value from sum.
+   - Track min window size.
+
+   **Note : Do not use if else for expanding and contracting the window as that will cause incorrect result. Intead expand till the condition is met and run a while loop on contrating window logic**
+
+   ````Java
+   public int minSubArrayLen(int target, int[] nums) {
+        
+        int windowStart = 0, windowEnd = 0;
+        int sum = 0;
+        int minLen = Integer.MAX_VALUE;
+
+        while(windowEnd < nums.length){
+
+            sum = sum + nums[windowEnd];
+            
+            while(sum >= target){
+                minLen = Math.min(minLen, windowEnd - windowStart + 1);
+                sum = sum - nums[windowStart];
+                windowStart++;
+            }
+            windowEnd++;
+        }
+        return minLen != Integer.MAX_VALUE ? minLen : 0;
+    }
+   ````
+   ------
