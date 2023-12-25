@@ -632,3 +632,78 @@ String result = "";
         return dp.get(key);
     }
     ````
+    --------
+19) > You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.
+You can either start from the step with index 0, or the step with index 1.
+Return the minimum cost to reach the top of the floor.
+
+    ````js
+    Input: cost = [10,15,20]
+    Output: 15
+    Explanation: You will start at index 1.
+        - Pay 15 and climb two steps to reach the top.
+        The total cost is 15.
+    ````
+
+    - Start either from 0th step or 1st step and take min of that.
+    - Add the cost of current stair and recur for i+1 (1 step) and i+2(2 step).
+    - Get minimum of that and add it to the cost of current stair cost.
+    - If i is greater than total number of stairs then return 0.
+
+    ````java
+    public int minCostClimbingStairs(int[] cost) {
+        
+        int[] dp = new int[cost.length];
+        Arrays.fill(dp, -1);
+
+        //Start from either 0th step or first step. Get min of that
+        return Math.min(minCostClimbingStairs(cost, 0, dp), minCostClimbingStairs(cost, 1, dp));
+    }
+
+    private int minCostClimbingStairs(int[] cost, int i, int[] dp){
+
+        if(i >= cost.length){
+            return 0;
+        }
+
+        if(dp[i] != -1){
+            return dp[i] ;
+        }
+
+        // For each step add the cost of current step and recur for 1 step or 2 step from current step
+        // Store the minimum cost of both the steps
+        dp[i] = cost[i] + Math.min(minCostClimbingStairs(cost, i+1, dp), minCostClimbingStairs(cost, i+2, dp));
+        return dp[i];
+    }
+    ````
+    ------
+20) > Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+A subarray is a contiguous non-empty sequence of elements within an array.
+
+    ````js
+    Input: nums = [1,2,3], k = 3
+    Output: 2
+    ````
+
+    - Start from 0th index and keep track of running sum.
+    - For each sum store the value in hashmap if it does not exist or increase the counter if already exists.
+    - Check in hashmap if sum - k already exists then there exists a subarray with sum k hence increate result count by 1.
+
+    ````java
+    public int subarraySum(int[] nums, int k) {
+        
+        int count = 0, sum = 0;
+        HashMap < Integer, Integer > map = new HashMap < > ();
+        map.put(0, 1);
+      
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k))
+                count += map.get(sum - k);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+    ````
+    -------
+    
