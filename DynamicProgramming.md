@@ -706,4 +706,62 @@ A subarray is a contiguous non-empty sequence of elements within an array.
     }
     ````
     -------
-    
+20) > Two Similar Problems with little tweek.
+    > 1) https://leetcode.com/problems/combinations/description/
+    > 2) https://leetcode.com/problems/permutations/
+
+    ````js
+    - In the first problem where we have to find combination of elements from a array of size(n) for a fixed number of elements(k)
+    - Lets say k=2 we have to iterate through each element and add it to the result.
+    - Once the size of result is equal to k then add the result to final result.
+    - Once we have chosen 1 element(i) we only have to recur for remaining elements(i+1)
+    - After recuring to make sure we take all combinations we have to remove the chosen element from the result
+    ````
+
+    **Code** :
+    ````java
+    private void combine(int n, int k, List<Integer> currResult, int start) {
+        if(currResult.size() == k){
+            result.add(new ArrayList<>(currResult));
+            return;
+        }
+
+        //Always start from next element
+        for(int i = start; i<=n; i++){
+            currResult.add(i);
+            combine(n, k, currResult, i+1);
+            currResult.remove(currResult.size() - 1);
+        }
+    }
+    ````
+
+    ````js
+    - In the 2nd problem we have to find all permutation of all elements so here k = size of whole array.
+    - Since here we have to find all permutation hence we have to always iterate from the 0th element and skip all ready added element in result.
+    - We add the current element in result and recur for remain elements apart from element already added.
+    - Once size of result is equal to array size we add the result for final result.
+    - Other then that both the problems are same.
+    ````
+
+    **Code** :
+    ````java
+    private void permute(int[] nums, List<Integer> currResult) {
+
+        if(currResult.size() == nums.length){
+            System.out.println(currResult);
+            result.add(new ArrayList<>(currResult));
+            return;
+        }
+
+        // For each recursion always start from 0th element
+        for(int i = 0;i<nums.length;i++){
+            // Check to avoid already selected element
+            if(!currResult.contains(nums[i])){
+                currResult.add(nums[i]);
+                permute(nums, currResult);
+                currResult.remove(currResult.size()-1);
+            }
+        }
+    }
+    ````
+
