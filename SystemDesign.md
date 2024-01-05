@@ -32,7 +32,7 @@ Use UDP over TCP when:
  - Late data is worse than loss of data
  - You want to implement your own error correction
 ````
-**General Latency Numbers**
+## General Latency Numbers ##
 ````
 L1 cache reference ..................  0.000011 seconds (SR-71 travels 1cm)
 Branch mispredict ...................  0.000110 sec (Bullet travels 4cm)
@@ -49,7 +49,7 @@ Disk seek ...........................  3.6 minutes (Brewing coffee in a French P
 Read 1 MB sequentially from disk ....  7.3 min (A performance of the first movement of Beethoven's 5th Symphony)
 Send packet CA->Netherlands->CA ..... 55.0 min (Going for a brisk 5km walk)
 ````
-**Availability patterns**
+## Availability patterns ##
 ````
  1) Fail Over
     - Active Passive (Master Slave)
