@@ -14,6 +14,10 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
 ````
 ## Reverse Proxy ##
 ## CDN ##
+````
+- Push CDN : Content is pushed by the server to CDN whenever new content appears on server. Server decides how often content should be refreshed on CDN. Works well with low traffic sites as there is no uneccessary pull by CDN.
+- Pull CDN : Content is pulled by the CDN whenever a new request comes and it is cached with a defined TTL. Once TTL expires the content is refreshed. Works well with high traffic sites. Helps in distributing the load from the servers
+````
 ## API Gateway ##
 ## Micro Services ##
 ## Message Queues ##
@@ -95,8 +99,4 @@ Downtime per month	4m 23s
 Downtime per week	1m 5s
 Downtime per day	8.6s
 ````
-## CDNs ##
-````
-- Push CDN : Content is pushed by the server to CDN whenever new content appears on server. Server decides how often content should be refreshed on CDN. Works well with low traffic sites as there is no uneccessary pull by CDN.
-- Pull CDN : Content is pulled by the CDN whenever a new request comes and it is cached with a defined TTL. Once TTL expires the content is refreshed. Works well with high traffic sites. Helps in distributing the load from the servers
-````
+
