@@ -22,7 +22,37 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
 ## Micro Services ##
 ## Message Queues ##
 ## Cache Servers ##
-## Data Bases ##
+## Databases ##
+   - ### Federation ###
+     ````
+     - Federation (or functional partitioning) splits up databases by function.
+       For example, instead of a single, monolithic database, you could have three databases: forums, users, and products,
+       resulting in less read and write traffic to each database and therefore less replication lag.
+     - Smaller databases result in more data that can fit in memory, which in turn results in more cache hits due to improved cache locality
+     - Joining data from two databases is more complex with a server link.
+     - Federation adds more hardware and additional complexity.
+     ````
+   - ### Sharding ###
+     ````
+     - Post federation individual product databases can be divided into smaller subsets of databases called Shards to further distribute the load.
+     - It distributes data across different databases such that each database can only manage a subset of the data. Taking a users database as an example,
+       as the number of users increases, more shards are added to the cluster.
+     - Less read and write traffic
+     - Less replication lag
+     - More cache hits
+     - Smaller indexes so more data in memory
+     - Common ways to shard a table of users is either through the user's last name initial or the user's geographic location.
+     ````
+   - ### Denormalization ###
+     ````
+     - After federation and sharding some queries might lead to complex joins across multiple tables. This can impact performance to queries.
+       Denormalization help in alleviating some of those joins by keeping redundant data in some of the tables.
+     - Materialize views can be used to keep redundant data consistent.
+     - In most systems, reads can heavily outnumber writes 100:1 or even 1000:1. A read resulting in a complex database join can be very expensive,
+       spending a significant amount of time on disk operations.
+     ````
+   - ### SQL Tuning ###
+   - ### Indexes ###
 -------------------------
 ## TCP vs UDP ##
 
