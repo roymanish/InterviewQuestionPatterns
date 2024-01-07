@@ -53,6 +53,33 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
      ````
    - ### SQL Tuning ###
    - ### Indexes ###
+## NoSQL ##
+````
+NoSQL is a collection of data items represented in a key-value store, document store, wide column store, or a graph database. Data is denormalized, and joins are generally done in the application code. Most NoSQL stores lack true ACID transactions and favor eventual consistency.
+
+BASE is often used to describe the properties of NoSQL databases. In comparison with the CAP Theorem, BASE chooses availability over consistency.
+
+Basically available - the system guarantees availability.
+Soft state - the state of the system may change over time, even without input.
+Eventual consistency - the system will become consistent over a period of time, given that the system doesn't receive input during that period.
+````
+  - ### Key Value Store ###
+    ````
+    - Datastructure similar to HashMaps
+    - Fast O(1) reads and writes.
+    - maintains keys in lexicographic order(Dictionary Order)
+    - high performance data store with simple structure. Generally used in distributed caches.
+    - Example - Redis and Memcache
+    ````
+  - ### Document Store ###
+    ````
+    - Datastructure like Hashmap with values as document
+    - Can store complex, semi-structured documents like XML, json, binary.
+    - provide APIs or a query language to query based on the internal structure of the document itself
+    - Example - MongoDB, CouchDB
+    ````
+  - ### Wide Column Store ###
+  - ### Graph Store ###
 ## Security ##
 ````
 - Open up only necessary ports. Allow the web server to respond to incoming requests from:
