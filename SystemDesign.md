@@ -53,6 +53,18 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
      ````
    - ### SQL Tuning ###
    - ### Indexes ###
+## Security ##
+````
+- Open up only necessary ports. Allow the web server to respond to incoming requests from:
+    - 80 for HTTP
+    - 443 for HTTPS
+    - 22 for SSH to only whitelisted IPs
+    - Prevent the web server from initiating outbound connections
+- Encrypt data in transit and at rest
+- Sanitize all user inputs or any input parameters exposed to user to prevent XSS and SQL injection.
+- Use parameterized queries to prevent SQL injection.
+- Use the principle of least privilege.
+````
 -------------------------
 ## TCP vs UDP ##
 
