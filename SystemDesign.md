@@ -76,10 +76,25 @@ Eventual consistency - the system will become consistent over a period of time, 
     - Datastructure like Hashmap with values as document
     - Can store complex, semi-structured documents like XML, json, binary.
     - provide APIs or a query language to query based on the internal structure of the document itself
-    - Example - MongoDB, CouchDB
+    - Example - MongoDB, CouchDB, Elasticsearch
     ````
   - ### Wide Column Store ###
+    ````
+    - Datastructure like Map of Map (ColumnFamily<RowKey, Columns<ColKey, Value, Timestamp>>)
+    - A wide column store's basic unit of data is a column (name/value pair).
+    - columns a grouped together to form column families or super column families
+    - can access each column independently with a row key, and columns with the same row key form a row
+    - Each row value contains a timestamp for versioning and for conflict resolution
+    - offer high availability and high scalability
+    - Example : BigTable, HBase, Cassandra
+    ````
   - ### Graph Store ###
+    ````
+    - Set of nodes representing complex many-to-many relationship between entities
+    - each node is a record and each arc is a relationship between two nodes
+    - offer high performance for data models with complex relationships such as in social network
+    - Example - Neo4j, FlockDB
+    ````
 ## Security ##
 ````
 - Open up only necessary ports. Allow the web server to respond to incoming requests from:
