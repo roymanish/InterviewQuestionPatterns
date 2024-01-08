@@ -21,7 +21,41 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
 ## API Gateway ##
 ## Micro Services ##
 ## Message Queues ##
-## Cache Servers ##
+````
+Message queues receive, hold, and deliver messages. If an operation is too slow to perform inline, you can use a message queue
+- If queues start to grow significantly, the queue size can become larger than memory, resulting in cache misses, disk reads, and even slower performance
+- Backpressure can help avoiding slowness by limiting the size of queue.
+- Client gets 503 when queue is full
+````
+## Caching ##
+````
+Caching help reduce load on servers. Caches can be located on the client side (OS or browser), server side, or in a distinct cache layer.
+- CDN caching
+- Caching at Reverse Proxies
+- Application Layer Caching : Inmemory caches such as Redis, Memcache
+- Database caching : Default caching on database servers
+````
+   - ### Cache update strategies ###
+     - Cache-aside
+       ````
+       On cache miss the data is fetched from the database and updated into the cache server.
+       - Multiple network trips required on cache miss. So some reads can be very slow.
+       - Data can become stale if cache TTL is not defined properly
+       - When a node fails, it is replaced by a new, empty node, which leads to more cache misses hence increased latency
+       ````
+     - Write Through
+       ````
+       Application uses the cache as the main data store, reading and writing data to it, while the cache is responsible for reading and writing to the database.
+       - Slow writes as data has to be replicated into the database servers synchronously.
+       - Most data written recently may never be read. Hence it has to be used with cache-aside strategy
+       - addition of new servers causes much more cache misses.
+       ````
+     - Write Behind
+       ````
+       Similar to write through but data is not writted to DB server synchronously instead it is pushed to a queue to be consumed by DB servers
+       - Better write latency
+       - Can impact durability of written data as data cached may never be written to DB servers
+       ````
 ## Databases ##
    - ### Federation ###
      ````
@@ -183,4 +217,69 @@ Downtime per month	4m 23s
 Downtime per week	1m 5s
 Downtime per day	8.6s
 ````
+## Cassandra ##
+````
+Cassandra is designed to handle big data workloads across multiple nodes with no single point of failure. 
+Its architecture is based on the understanding that system and hardware failures can and do occur. Cassandra addresses the problem of failures by employing
+a peer-to-peer distributed system across homogeneous nodes where data is distributed among all nodes in the cluster. Each node frequently exchanges state
+information about itself and other nodes across the cluster using peer-to-peer gossip communication protocol.
+- maintains a sequentially written commit logs to ensure data durability
+- Data is then indexed and written to an in-memory structure, called a memtable, which resembles a write-back cache.
+- Everytime the memtable is full the data is flushed to SSTable in disk.
+- All writes are automatically partitioned and replicated throughout the cluster.
+- SSTables are consolidated by periodically running compaction process where discarded data is deleted.
+- Any node can act as request coordinator in the cluster.
+- Once coordinator is assigned it then decides which node in the cluster should serve the read/write requests.
+````
+  - ### Gossip ###
+    ````
+    A peer-to-peer communication protocol to discover and share location and state information about the other nodes in a Cassandra cluster.
+    Gossip information is also persisted locally by each node to use immediately when a node restarts.
+    ````
+  - ### Partitioner ###
+    ````
+    A partitioner is a hash function that derives a token from the primary key of a row and uses the token to locate the node that will receive
+    the first replica of the data. A rowkey can be used as the partition key as well.
+    ````
+  - ### Replication Factor ###
+    ````
+    It determines how many replicas of a row will be maintained.
+    - A replication factor 1 means there is only one replica of a row on 1 node.
+    - A replication factor of 2 means there will be 2 replicas of the row and each of those replicas will be on a different node in the cluster.
+    ````
+  - ### Replication strategy ###
+    ````
+    Number of write replicas + Number of read replicas > Replication factor
+    ````
+  - ### Snitch ###
+    ````
+    A snitch determines which datacenters and racks nodes belong to. They inform Cassandra about the network topology so that requests are routed
+    efficiently and allows Cassandra to distribute replicas by grouping machines into datacenters and racks
+    ````
+## Kafka ##
+````
+Kafka is a persistent, distributed, replicated pub/sub messaging system. Producers send message to a group of brokers who store then in an append only commit log.
+Then consumers read from those brokers based on offset.
+  - Uses NIO Filechannel for efficient communications.
+  - Prioritises throughput over consistency.
+  - Producers determine the partition where the message should be sent based on routing key.
+  - Kafka only gaurantees ordering of messages per partition. If messages are on different partiion then they may not be ordered.
+````
+  - ### Brokers ###
+    ````
+    - Receive messages from Producers (push),deliver messages to Consumers (pull)
+    - Responsible for persisting the messages for some time
+    - Relatively lightweight - mostly just handling TCP connections and keeping open file handles to the queue files
+    ````
+  - ### Topics/Queues ###
+    ````
+    - Append only log files for fast sequential write and sequential read.
+    - Patitioned across multiple brokers
+    ````
+  - ### Replication ###
+    ````
+    - All topic partitions are replicated with one replica acting as master.
+    - All read and writes must go to master only.
+    - Replicas are just for Fault Tolerance
+    ````
 
