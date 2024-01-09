@@ -141,6 +141,9 @@ Eventual consistency - the system will become consistent over a period of time, 
 - Use parameterized queries to prevent SQL injection.
 - Use the principle of least privilege.
 ````
+## Durability ##
+- Commit logs
+- Data replication
 -------------------------
 ## TCP vs UDP ##
 
