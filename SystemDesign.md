@@ -96,6 +96,8 @@ BASE is often used to describe the properties of NoSQL databases. In comparison 
 Basically available - the system guarantees availability.
 Soft state - the state of the system may change over time, even without input.
 Eventual consistency - the system will become consistent over a period of time, given that the system doesn't receive input during that period.
+
+Uses Bloom Filter to quickly find out if a SSTable contains a key or not
 ````
   - ### Key Value Store ###
     ````
@@ -143,7 +145,7 @@ Eventual consistency - the system will become consistent over a period of time, 
 ````
 ## Durability ##
 - Commit logs
-- Data replication
+- Data redundancy
 -------------------------
 ## TCP vs UDP ##
 
