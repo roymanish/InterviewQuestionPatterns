@@ -1,7 +1,22 @@
 # System Design #
 - [Load Balancer](#load-balancer)
-  - [Reverse Proxy](#reverse-proxy)
+- [Reverse Proxy](#reverse-proxy)
+- [CDN](#cdn)
+- [API Gateway](#api-gateway)
+- [Microservices](#microservices)
+- [Message Queue](#message-queue)
+- [Caching](#caching)
 - [Databases](#databases)
+- [NoSql](#no-sql)
+- [Security](#security)
+- [Durability](#durability)
+- [TCP vs UDP](#tcp-vs-udp)
+- [General Latency Numbers](#latency-numbers)
+- [Availability Patterns](#availability-patterns)
+- [Availability Numbers](#availability-numbers)
+- [Cassandra](#cassandra)
+- [Kafka](#kafka)
+- [Hashing](#hashing)
 
 <a id="load-balancer"></a>
 ## Load Balancer ##
@@ -19,13 +34,17 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
 ````
 <a id="reverse-proxy"></a>
 ## Reverse Proxy ##
+<a id="cdn"></a>
 ## CDN ##
 ````
 - Push CDN : Content is pushed by the server to CDN whenever new content appears on server. Server decides how often content should be refreshed on CDN. Works well with low traffic sites as there is no uneccessary pull by CDN.
 - Pull CDN : Content is pulled by the CDN whenever a new request comes and it is cached with a defined TTL. Once TTL expires the content is refreshed. Works well with high traffic sites. Helps in distributing the load from the servers
 ````
+<a id="api-gateway"></a>
 ## API Gateway ##
+<a id="microservices"></a>
 ## Micro Services ##
+<a id="messsage-queues"></a>
 ## Message Queues ##
 ````
 Message queues receive, hold, and deliver messages. If an operation is too slow to perform inline, you can use a message queue
@@ -33,6 +52,7 @@ Message queues receive, hold, and deliver messages. If an operation is too slow 
 - Backpressure can help avoiding slowness by limiting the size of queue.
 - Client gets 503 when queue is full
 ````
+<a id="caching"></a>
 ## Caching ##
 ````
 Caching help reduce load on servers. Caches can be located on the client side (OS or browser), server side, or in a distinct cache layer.
@@ -94,6 +114,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
      ````
    - ### SQL Tuning ###
    - ### Indexes ###
+<a id="nosql"></a>
 ## NoSQL ##
 ````
 NoSQL is a collection of data items represented in a key-value store, document store, wide column store, or a graph database. Data is denormalized, and joins are generally done in the application code. Most NoSQL stores lack true ACID transactions and favor eventual consistency.
@@ -138,6 +159,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
     - offer high performance for data models with complex relationships such as in social network
     - Example - Neo4j, FlockDB
     ````
+<a id="security"></a>
 ## Security ##
 ````
 - Open up only necessary ports. Allow the web server to respond to incoming requests from:
@@ -150,34 +172,37 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
 - Use parameterized queries to prevent SQL injection.
 - Use the principle of least privilege.
 ````
+<a id="durability"></a>
 ## Durability ##
 - Commit logs
 - Data redundancy
--------------------------
+
+<a id="tcs-vs-udp"></a>
 ## TCP vs UDP ##
 
-**TCP**
-````
-TCP is a connection-oriented protocol over an IP network. Connection is established and terminated using a handshake. All packets sent are guaranteed to reach the destination in the original order and without corruption through:
-
-Sequence numbers and checksum fields for each packet
-Acknowledgement packets and automatic retransmission
-
-TCP also implements flow control and congestion control by bufferring of messages in an internal queue.
-
-Use TCP over UDP when:
- - You need all of the data to arrive intact
- - You want to automatically make a best estimate use of the network throughput
-````
-**UDP**
-````
-UDP is connectionless. Datagrams (analogous to packets) are guaranteed only at the datagram level. Datagrams might reach their destination out of order or not at all. UDP does not support congestion control. Without the guarantees that TCP support, UDP is generally more efficient.
-
-Use UDP over TCP when:
- - You need the lowest latency
- - Late data is worse than loss of data
- - You want to implement your own error correction
-````
+  - ### TCP ###
+    ````
+    TCP is a connection-oriented protocol over an IP network. Connection is established and terminated using a handshake. All packets sent are guaranteed to reach the destination in the original order and without corruption through:
+    
+    Sequence numbers and checksum fields for each packet
+    Acknowledgement packets and automatic retransmission
+    
+    TCP also implements flow control and congestion control by bufferring of messages in an internal queue.
+    
+    Use TCP over UDP when:
+     - You need all of the data to arrive intact
+     - You want to automatically make a best estimate use of the network throughput
+    ````
+  - ### UDP ###
+    ````
+    UDP is connectionless. Datagrams (analogous to packets) are guaranteed only at the datagram level. Datagrams might reach their destination out of order or not at all. UDP does not support congestion control. Without the guarantees that TCP support, UDP is generally more efficient.
+    
+    Use UDP over TCP when:
+     - You need the lowest latency
+     - Late data is worse than loss of data
+     - You want to implement your own error correction
+    ````
+<a id="latency-numbers"></a>
 ## General Latency Numbers ##
 ````
 L1 cache reference ..................  0.000011 seconds (SR-71 travels 1cm)
@@ -195,6 +220,7 @@ Disk seek ...........................  3.6 minutes (Brewing coffee in a French P
 Read 1 MB sequentially from disk ....  7.3 min (A performance of the first movement of Beethoven's 5th Symphony)
 Send packet CA->Netherlands->CA ..... 55.0 min (Going for a brisk 5km walk)
 ````
+<a id="availability-patterns"></a>
 ## Availability patterns ##
 ````
  1) Fail Over
@@ -211,6 +237,7 @@ Send packet CA->Netherlands->CA ..... 55.0 min (Going for a brisk 5km walk)
     - By request parameters
  4) Multi-AZ and Multi Region clustering 
 ````
+<a id="availability-numbers"></a>
 ### Availability Numbers ###
 ````
 99.9% availability - three 9s**
@@ -229,6 +256,7 @@ Downtime per month	4m 23s
 Downtime per week	1m 5s
 Downtime per day	8.6s
 ````
+<a id="cassandra"></a>
 ## Cassandra ##
 ````
 Cassandra is designed to handle big data workloads across multiple nodes with no single point of failure. 
@@ -268,6 +296,7 @@ information about itself and other nodes across the cluster using peer-to-peer g
     A snitch determines which datacenters and racks nodes belong to. They inform Cassandra about the network topology so that requests are routed
     efficiently and allows Cassandra to distribute replicas by grouping machines into datacenters and racks
     ````
+<a id="kafka"></a>
 ## Kafka ##
 ````
 Kafka is a persistent, distributed, replicated pub/sub messaging system. Producers send message to a group of brokers who store then in an append only commit log.
@@ -294,6 +323,7 @@ Then consumers read from those brokers based on offset.
     - All read and writes must go to master only.
     - Replicas are just for Fault Tolerance
     ````
+<a id="hashing"></a>
 ## Hashing ##
 ````
 Hashing is the process of transforming any given key or a string of characters into another value. This is usually represented by a shorter,
@@ -303,22 +333,4 @@ Popular Hashing Functions :
   - MD5, SHA-1 - Commonly used, used to be secure, but no longer collision resistant
   - SHA-2 - Commonly used, secure. It's a family of functions with different output size.
 ````
-
-**Table of content:**
-- [Hello World](#item-one)
-- [First Item](#item-two)
-- [Second Item](#item-three)
-
-<!-- headings -->
-<a id="item-one"></a>
-### Hello World
-Hello world content goes here
-
-<a id="item-two"></a>
-### First Item
-First item content goes here
-
-<a id="item-three"></a>
-### Second Item
-Second item content goes here
 
