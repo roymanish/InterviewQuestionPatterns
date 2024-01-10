@@ -6,16 +6,34 @@
 - [Microservices](#microservices)
 - [Message Queue](#message-queue)
 - [Caching](#caching)
+    - [Cache update strategies](#cache-update-strategies)
+      - [Cache Aside](#cache-aside)
+      - [Write Through](#write-through)
+      - [Write Behind](#write-behind)
 - [Databases](#databases)
 - [NoSql](#no-sql)
+    - [Key Value Store](#key-value-store)
+    - [Document Store](#document-store)
+    - [Wide Column Store](#wide-column-store)
+    - [Graph Store](#graph-store)
 - [Security](#security)
 - [Durability](#durability)
 - [TCP vs UDP](#tcp-vs-udp)
+    - [TCP](#tcp)
+    - [UDP](#udp)
 - [General Latency Numbers](#latency-numbers)
 - [Availability Patterns](#availability-patterns)
 - [Availability Numbers](#availability-numbers)
 - [Cassandra](#cassandra)
+    - [Gossip](#gossip)
+    - [Partitioner](#partitioner)
+    - [Replication Factor](#replication-factor)
+    - [Replication strategy](#replication-strategy)
+    - [Snitch](#snitch)
 - [Kafka](#kafka)
+    - [Brokers](#brokers)
+    - [Topics/Queues](#topics-or-queues)
+    - [Replication](#replication)
 - [Hashing](#hashing)
 
 <a id="load-balancer"></a>
@@ -61,7 +79,9 @@ Caching help reduce load on servers. Caches can be located on the client side (O
 - Application Layer Caching : Inmemory caches such as Redis, Memcache
 - Database caching : Default caching on database servers
 ````
+<a id="cache-update-strategies"></a>
    - ### Cache update strategies ###
+     <a id="cache-aside"></a>
      - Cache-aside
        ````
        On cache miss the data is fetched from the database and updated into the cache server.
@@ -69,6 +89,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
        - Data can become stale if cache TTL is not defined properly
        - When a node fails, it is replaced by a new, empty node, which leads to more cache misses hence increased latency
        ````
+       <a id="write-through"></a>
      - Write Through
        ````
        Application uses the cache as the main data store, reading and writing data to it, while the cache is responsible for reading and writing to the database.
@@ -76,6 +97,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
        - Most data written recently may never be read. Hence it has to be used with cache-aside strategy
        - addition of new servers causes much more cache misses.
        ````
+     <a id="write-behind"></a>
      - Write Behind
        ````
        Similar to write through but data is not writted to DB server synchronously instead it is pushed to a queue to be consumed by DB servers
@@ -84,6 +106,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
        ````
 <a id="databases"></a>
 ## Databases ##
+<a id="federation"></a>
    - ### Federation ###
      ````
      - Federation (or functional partitioning) splits up databases by function.
@@ -93,6 +116,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
      - Joining data from two databases is more complex with a server link.
      - Federation adds more hardware and additional complexity.
      ````
+     <a id="sharding"></a>
    - ### Sharding ###
      ````
      - Post federation individual product databases can be divided into smaller subsets of databases called Shards to further distribute the load.
@@ -104,6 +128,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
      - Smaller indexes so more data in memory
      - Common ways to shard a table of users is either through the user's last name initial or the user's geographic location.
      ````
+     <a id="denormalization"></a>
    - ### Denormalization ###
      ````
      - After federation and sharding some queries might lead to complex joins across multiple tables. This can impact performance to queries.
@@ -112,7 +137,9 @@ Caching help reduce load on servers. Caches can be located on the client side (O
      - In most systems, reads can heavily outnumber writes 100:1 or even 1000:1. A read resulting in a complex database join can be very expensive,
        spending a significant amount of time on disk operations.
      ````
+     <a id="sql-tuning"></a>
    - ### SQL Tuning ###
+     <a id="indexes"></a>
    - ### Indexes ###
 <a id="no-sql"></a>
 ## NoSQL ##
@@ -127,6 +154,7 @@ Eventual consistency - the system will become consistent over a period of time, 
 
 Uses Bloom Filter to quickly find out if a SSTable contains a key or not
 ````
+<a id="key-value-store"></a>
   - ### Key Value Store ###
     ````
     - Datastructure similar to HashMaps
@@ -135,6 +163,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
     - high performance data store with simple structure. Generally used in distributed caches.
     - Example - Redis and Memcache
     ````
+    <a id="document-store"></a>
   - ### Document Store ###
     ````
     - Datastructure like Hashmap with values as document
@@ -142,6 +171,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
     - provide APIs or a query language to query based on the internal structure of the document itself
     - Example - MongoDB, CouchDB, Elasticsearch
     ````
+    <a id="wide-column-store"></a>
   - ### Wide Column Store ###
     ````
     - Datastructure like Map of Map (ColumnFamily<RowKey, Columns<ColKey, Value, Timestamp>>)
@@ -152,6 +182,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
     - offer high availability and high scalability
     - Example : BigTable, HBase, Cassandra
     ````
+    <a id="graph-store"></a>
   - ### Graph Store ###
     ````
     - Set of nodes representing complex many-to-many relationship between entities
@@ -180,6 +211,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
 <a id="tcs-vs-udp"></a>
 ## TCP vs UDP ##
 
+  <a id="tcs"></a>
   - ### TCP ###
     ````
     TCP is a connection-oriented protocol over an IP network. Connection is established and terminated using a handshake. All packets sent are guaranteed to reach the destination in the original order and without corruption through:
@@ -193,6 +225,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
      - You need all of the data to arrive intact
      - You want to automatically make a best estimate use of the network throughput
     ````
+    <a id="udp"></a>
   - ### UDP ###
     ````
     UDP is connectionless. Datagrams (analogous to packets) are guaranteed only at the datagram level. Datagrams might reach their destination out of order or not at all. UDP does not support congestion control. Without the guarantees that TCP support, UDP is generally more efficient.
@@ -271,26 +304,31 @@ information about itself and other nodes across the cluster using peer-to-peer g
 - Any node can act as request coordinator in the cluster.
 - Once coordinator is assigned it then decides which node in the cluster should serve the read/write requests.
 ````
+<a id="gossip"></a>
   - ### Gossip ###
     ````
     A peer-to-peer communication protocol to discover and share location and state information about the other nodes in a Cassandra cluster.
     Gossip information is also persisted locally by each node to use immediately when a node restarts.
     ````
+    <a id="practitioner"></a>
   - ### Partitioner ###
     ````
     A partitioner is a hash function that derives a token from the primary key of a row and uses the token to locate the node that will receive
     the first replica of the data. A rowkey can be used as the partition key as well.
     ````
+    <a id="replication-factor"></a>
   - ### Replication Factor ###
     ````
     It determines how many replicas of a row will be maintained.
     - A replication factor 1 means there is only one replica of a row on 1 node.
     - A replication factor of 2 means there will be 2 replicas of the row and each of those replicas will be on a different node in the cluster.
     ````
+    <a id="replication-strategy"></a>
   - ### Replication strategy ###
     ````
     Number of write replicas + Number of read replicas > Replication factor
     ````
+    <a id="snitch"></a>
   - ### Snitch ###
     ````
     A snitch determines which datacenters and racks nodes belong to. They inform Cassandra about the network topology so that requests are routed
@@ -306,17 +344,20 @@ Then consumers read from those brokers based on offset.
   - Producers determine the partition where the message should be sent based on routing key.
   - Kafka only gaurantees ordering of messages per partition. If messages are on different partiion then they may not be ordered.
 ````
+<a id="brokers"></a>
   - ### Brokers ###
     ````
     - Receive messages from Producers (push),deliver messages to Consumers (pull)
     - Responsible for persisting the messages for some time
     - Relatively lightweight - mostly just handling TCP connections and keeping open file handles to the queue files
     ````
+    <a id="topics-or-queues"></a>
   - ### Topics/Queues ###
     ````
     - Append only log files for fast sequential write and sequential read.
     - Patitioned across multiple brokers
     ````
+    <a id="replication"></a>
   - ### Replication ###
     ````
     - All topic partitions are replicated with one replica acting as master.
