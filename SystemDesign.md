@@ -35,6 +35,7 @@
     - [Topics/Queues](#topics-or-queues)
     - [Replication](#replication)
 - [Hashing](#hashing)
+- [References](#references)
 
 <a id="load-balancer"></a>
 ## Load Balancer ##
@@ -374,4 +375,8 @@ Popular Hashing Functions :
   - MD5, SHA-1 - Commonly used, used to be secure, but no longer collision resistant
   - SHA-2 - Commonly used, secure. It's a family of functions with different output size.
 ````
+<a id="references"></a>
+## References ##
+    - https://tianpan.co/notes/2016-02-13-crack-the-system-design-interview/
+    - https://github.com/donnemartin/system-design-primer
 
