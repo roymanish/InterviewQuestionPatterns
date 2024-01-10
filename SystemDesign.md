@@ -377,6 +377,6 @@ Popular Hashing Functions :
 ````
 <a id="references"></a>
 ## References ##
-    - https://tianpan.co/notes/2016-02-13-crack-the-system-design-interview/
-    - https://github.com/donnemartin/system-design-primer
+- https://tianpan.co/notes/2016-02-13-crack-the-system-design-interview/
+- https://github.com/donnemartin/system-design-primer
 
