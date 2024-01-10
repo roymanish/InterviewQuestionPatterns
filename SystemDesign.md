@@ -44,7 +44,7 @@ At the cost of flexibility, layer 4 load balancing requires less time and comput
 ## API Gateway ##
 <a id="microservices"></a>
 ## Micro Services ##
-<a id="messsage-queues"></a>
+<a id="message-queue"></a>
 ## Message Queues ##
 ````
 Message queues receive, hold, and deliver messages. If an operation is too slow to perform inline, you can use a message queue
@@ -114,7 +114,7 @@ Caching help reduce load on servers. Caches can be located on the client side (O
      ````
    - ### SQL Tuning ###
    - ### Indexes ###
-<a id="nosql"></a>
+<a id="no-sql"></a>
 ## NoSQL ##
 ````
 NoSQL is a collection of data items represented in a key-value store, document store, wide column store, or a graph database. Data is denormalized, and joins are generally done in the application code. Most NoSQL stores lack true ACID transactions and favor eventual consistency.
