@@ -287,4 +287,13 @@ Then consumers read from those brokers based on offset.
     - All read and writes must go to master only.
     - Replicas are just for Fault Tolerance
     ````
+## Hashing ##
+````
+Hashing is the process of transforming any given key or a string of characters into another value. This is usually represented by a shorter,
+fixed-length value or key that represents and makes it easier to find or employ the original string.
+
+Popular Hashing Functions :
+  - MD5, SHA-1 - Commonly used, used to be secure, but no longer collision resistant
+  - SHA-2 - Commonly used, secure. It's a family of functions with different output size.
+````
 
