@@ -26,4 +26,4 @@
   URL retention 5 YR -> 40GB * 365 * 5 ->70000GB -> 70TB
 ````
 ### Diagram ###
- ![](https://github.com/roymanish/InterviewQuestionPatterns/blob/main/images/url-shortener.jpg)
+ ![](https://github.com/roymanish/InterviewQuestionPatterns/blob/main/images/url-shortener.png)
