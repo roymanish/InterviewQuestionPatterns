@@ -24,6 +24,7 @@
 - [General Latency Numbers](#latency-numbers)
 - [Availability Patterns](#availability-patterns)
 - [Availability Numbers](#availability-numbers)
+- [Capacity Estimations](#capacity-estimations)
 - [Cassandra](#cassandra)
     - [Gossip](#gossip)
     - [Partitioner](#partitioner)
@@ -289,6 +290,14 @@ Downtime per year	52min 35.7s
 Downtime per month	4m 23s
 Downtime per week	1m 5s
 Downtime per day	8.6s
+````
+<a id="capacity-estimations"></a>
+## Capacity Estimations ##
+````
+    - 1 million request/day = 12 request/second
+    - 1 million bytes = 1MB
+    - Seconds in a Day = 86400
+    - Seconds in a year = 31M
 ````
 <a id="cassandra"></a>
 ## Cassandra ##
