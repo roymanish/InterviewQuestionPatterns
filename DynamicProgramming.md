@@ -764,4 +764,54 @@ A subarray is a contiguous non-empty sequence of elements within an array.
         }
     }
     ````
+21) > Prefix Sum for subarray problems. </br>
+      Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.</br>
+      A subarray is a contiguous non-empty sequence of elements within an array.
+
+    ````js
+    Example 1:
+    Input: nums = [1,1,1], k = 2
+    Output: 2
+    
+    Example 2:
+    Input: nums = [1,2,3], k = 3
+    Output: 2
+    ````
+
+    ````js
+    - Most findings subarray(s) with given sum/average related problems can be solved by maintaining a prefixSum map/array.
+    - A prefixSum is running sum upto a particular element.
+    - For example if we have arr = [1,1,1,1] and we need to search subarrays with sum = 2.
+    - We can maintain a map with [key, value] = [sum till ith element, count].
+    - To find sum of elements between index i and j where j > i we can subtract the sum till i from sum till j.
+    - In the above example if we want sum of elements i = 1 till j = 2 then we can subtract the sum till i = 1 from sum till j=2.
+    - Applying this logic to the problem mentioned above we can look for subarray that can be removed from current sum to get the required sum.
+    - So for reuired sum = 2 the sum till j = 2 is 3 and sum till i = 1 is 1.
+    - Here we can see that if we sum of elements till i=1 from sum till j=2 then we get 2 which is the required sum.
+    ````
+    **Code** :
+    ````java
+    public int subarraySum(int[] nums, int k) {
+        
+        Map<Integer, Integer> prefixSumMap = new HashMap<>();
+        prefixSumMap.put(0,1);
+
+        int count = 0;
+        int sum = 0;
+        for(int i=0;i<nums.length;i++){
+            sum = sum + nums[i];
+
+            //Given current sum this like check if there is a prefix sum that can be removed to get required sum subarray.
+            // Example if array is [1,1,1,1] , k = 2
+            // If we are element 3 then currSum = 3
+            // Here is we remove prefix sum till element 1 which is 1 then we will get k which is the sum of element 2 and 3
+            // To get the sum of middle elements we just substract the sum of previous elements from totalsum till here.
+            if(prefixSumMap.containsKey(sum-k)){
+                count += prefixSumMap.get(sum-k);
+            }
+            prefixSumMap.put(sum, prefixSumMap.getOrDefault(sum, 0)+1);
+        }
+        return count;
+    }
+    ````
 
