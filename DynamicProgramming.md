@@ -431,6 +431,7 @@ String result = "";
         Output: 2
         Explanation: The longest repeating subsequence is “or” {tomorrow}.
     ````
+    - Assume there are two strings of same value and find LCS where index of LCS not same in both the strings.
     - Similar to LCS problem, only in this case we need to make sure whenever char at two index match then index should not be same.
        
     **Code** :
