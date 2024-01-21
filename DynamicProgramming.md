@@ -99,7 +99,7 @@ private static int rodCutting(int[] prices, int n) {
         
         int maxPrice = Integer.MIN_VALUE;
 
-        // For all ord lengths we should start from 0 as all rods can be cut in any size.
+        // For all rod lengths we should start from 0 as all rods can be cut in any size.
         for(int i = 0;i<n;i++) {
             int currPrice = prices[i] + rodCutting(prices, n-i-1);
             maxPrice = Math.max(maxPrice, currPrice);
