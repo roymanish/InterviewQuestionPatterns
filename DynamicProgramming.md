@@ -391,6 +391,9 @@ String result = "";
     ````
 
     - This problem can be solved by calculating the LIS of each subarray in a recursive way
+    - For each index we can either choose it if it is greated then previous element or we can skip it. We recur for remaining elements
+    - If we choose the current element then we need to add 1 in the result.
+    - We need to track prevIdx to check if curr is greater than previous or not. Start prevIdx with -1 for base case.
     - Start with two pointers prevIdx = -1 and currIdx = 0
     - If prevIdx is less than currIdx then add one and compute LIS recursively for remaining number of elements.
     - If the condition is not true then skip the current element and compute for remaining.
