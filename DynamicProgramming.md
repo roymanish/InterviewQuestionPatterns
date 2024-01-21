@@ -26,6 +26,8 @@ private long maxTaxiEarnings(int n, int[][] rides, int startIdx, long[] memo){
         if(memo[startIdx] > 0){
             return memo[startIdx];
         }
+
+        //If we pick passenger at startIdx then find the next passenger we can pick for recursion
         int i = startIdx + 1;
         while(i < rides.length){
             if(rides[i][0] >= rides[startIdx][1]){
@@ -33,6 +35,7 @@ private long maxTaxiEarnings(int n, int[][] rides, int startIdx, long[] memo){
             }
             i++;
         }
+
         int currTip = rides[startIdx][1] - rides[startIdx][0] + rides[startIdx][2];
         memo[startIdx] = Math.max(maxTaxiEarnings(n, rides, startIdx+1, memo), 
                                     currTip + maxTaxiEarnings(n, rides, i, memo));
