@@ -148,6 +148,8 @@ Caching help reduce load on servers. Caches can be located on the client side (O
 ````
 NoSQL is a collection of data items represented in a key-value store, document store, wide column store, or a graph database. Data is denormalized, and joins are generally done in the application code. Most NoSQL stores lack true ACID transactions and favor eventual consistency.
 
+NoSQL makes it easier to scale out since the data related to a specific entity is stored in one document instead of multiple tables over nodes
+
 BASE is often used to describe the properties of NoSQL databases. In comparison with the CAP Theorem, BASE chooses availability over consistency.
 
 Basically available - the system guarantees availability.
