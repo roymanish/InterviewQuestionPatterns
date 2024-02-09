@@ -3,6 +3,7 @@
 - [Volatile vs Atomic variables](#volatile-atomic)
 - [Thread Local](#thread-local)
 - [Parallelism vs Concurrency](#parallelism-concurrency)
+- [Locks](#locks)
 
 
 <a id="volatile-atomic"></a>
@@ -36,3 +37,19 @@ Examples from Spring :
 Parallelism : When we use multiple threads to multiple tasks at the same time.
 Concurrency : When we coordinate between multiple threads to access a shared variable or execute a shared task.
 ````
+<a id="locks"></a>
+## Locks ##
+  - ### ReentrantLock ###
+    ````
+      - Lock objects in java are explicite compared to synchronized keyword
+      - Lock objects can be acquired and released in different scopes(methods)
+      - Lock objects provide methods to tryLock() and tryLock(timeout) methods to avoid infinite waiting.
+      - ReentrantLock can be acquired multiple times on same object. For example in case of recursive method calls
+      - ReentrantLock gives option of fairness or locks, meaning longest waiting thread will get the lock.
+    ````
+  - ### RewriteReentrantLock ###
+    ````
+      - Two types of locks can be acquired by RewriteReentrantLock Read Lock and Write lock
+      - Any number of read locks can be acquired at a time.
+      - Only one thread will be allowed to acquire the write lock.
+    ````
