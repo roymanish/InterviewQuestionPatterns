@@ -54,6 +54,7 @@ Concurrency : When we coordinate between multiple threads to access a shared var
       - Any number of read locks can be acquired at a time.
       - Only one thread will be allowed to acquire the write lock.
     ````
+<a id="stopping-timeouts"></a>
 ## Stopping the thread(s) after a timeout #
 ````
   - Threads are not guaranteed to stop directly by any mechanism once they are scheduled/started.
