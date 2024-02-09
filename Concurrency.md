@@ -4,6 +4,7 @@
 - [Thread Local](#thread-local)
 - [Parallelism vs Concurrency](#parallelism-concurrency)
 - [Locks](#locks)
+- [Stopping the thread(s) after a timeout](#stopping-timeouts)
 
 
 <a id="volatile-atomic"></a>
@@ -53,3 +54,11 @@ Concurrency : When we coordinate between multiple threads to access a shared var
       - Any number of read locks can be acquired at a time.
       - Only one thread will be allowed to acquire the write lock.
     ````
+## Stopping the thread(s) after a timeout #
+````
+  - Threads are not guaranteed to stop directly by any mechanism once they are scheduled/started.
+  - ExecuterService.shutDown() calls interrupt() internally on each thread currently running which does not guarantee stopping of thread.
+  - ExecuterService.shutDownNow() calls interrupt() internally on running/scheduled threads which does not guarantee stopping of thread.
+  - Even stopping can be attempted by calling interrupt() directly on thread.
+  - Timeout can be set by using overloaded schedule() methods by providing the timeout value and unit.
+````
