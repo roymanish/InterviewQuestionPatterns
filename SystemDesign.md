@@ -218,23 +218,44 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
 ````
 Replication refers to keeping multiple copies of the data at various nodes (preferably geographically distributed) to achieve availability, scalability, and performance
 ````
-    <a id="replication-types"></a>
+<a id="replication-types"></a>
   - ### Types of Replication ###
+    - #### Synchronous Replication ####
     ````
-    - Synchronous Replication: Primary node will wait to return the response till all secondary nodes have received the data.
+    Primary node will wait to return the response till all secondary nodes have received the data.
     So all nodes are always updated. This will cause high latency and low fault tolerance.
     As even one node is slow or fails during request execution it will impact the SLA of whole request.
-    - Asynchronous Replication : Primary node can return the response one the changes is applied locally and propagate the
+    ````
+    - #### Asynchronous Replication ####
+    ````
+    Primary node can return the response one the changes is applied locally and propagate the
     change to secondary node in async. This will have low latency and better fault tolerance. This can cause data consistency
     issues as all the nodes may not get updated in time or at all.
     ````
     <a id="replication-strategies"></a>
   - ### Replication Stategies ###
-    ````
-        - Single leader or primary-secondary replication
-        - Multi-leader replication
-        - Peer-to-peer or leaderless replication
-    ````
+    - #### Single leader or primary-secondary replication ####
+      ````
+      - Primary handles all the writes and secondary nodes are responsible for read.
+      - Provides efficient read scalability
+      - Most appropriate for read heavy applications
+      - This may lead to write bottlenecks and failures if primary fails. Can be handled by having a primary in standby or promoting a read replica as primary.
+      - Replication of data can be done as statement based where each query statement is sent to replicas to be executed(functions like sysdate() or now() can cause problems)
+      or WAL based where commit log is shared with replicas.
+      - Asyc replication of data between primary and secondary may lead to inconsistent data.
+      ````
+    - #### Multi-leader replication ####
+      ````
+      - There are multiple leaders who handle writes and all writes are shared with all primary and all secondary
+      - This strategy can lead to conflict in the DB state if two separate leaders accept write for same data and when these changes
+      arrive at the other leader as part of replication it can lead to conflict.
+      - Steps to handle conflict :
+          - Conflicts can be avoided by making sure writes for a particular record always goes to same leader.
+          - Conflicts can be resolved by applying Last Write Wins strategy.
+      ````
+    - #### Peer-to-peer or leaderless replication ####
+      ````
+      ````
 <a id="tcs-vs-udp"></a>
 ## TCP vs UDP ##
 
