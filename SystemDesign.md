@@ -19,6 +19,7 @@
 - [Security](#security)
 - [Durability](#durability)
 - [Replication](#replication)
+    - [Types of Replication](#replication-types)
 - [TCP vs UDP](#tcp-vs-udp)
     - [TCP](#tcp)
     - [UDP](#udp)
@@ -220,12 +221,14 @@ Replication refers to keeping multiple copies of the data at various nodes (pref
 ````
 <a id="replication-types"></a>
   - ### Types of Replication ###
+    <a id="sync-replication"></a>
     - #### Synchronous Replication ####
     ````
     Primary node will wait to return the response till all secondary nodes have received the data.
     So all nodes are always updated. This will cause high latency and low fault tolerance.
     As even one node is slow or fails during request execution it will impact the SLA of whole request.
     ````
+    <a id="async-replication"></a>
     - #### Asynchronous Replication ####
     ````
     Primary node can return the response one the changes is applied locally and propagate the
