@@ -20,6 +20,7 @@
 - [Durability](#durability)
 - [Replication](#replication)
     - [Types of Replication](#replication-types)
+    - [Replication Strategies](#replication-strategies)
 - [TCP vs UDP](#tcp-vs-udp)
     - [TCP](#tcp)
     - [UDP](#udp)
