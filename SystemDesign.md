@@ -221,8 +221,12 @@ Replication refers to keeping multiple copies of the data at various nodes (pref
     <a id="replication-types"></a>
   - ### Types of Replication ###
     ````
-        - Synchronous Replication : Primary node will wait to return the response till all secondary nodes have received the data. So all nodes are always updated. This will cause h            high latency and low fault tolerance. As even one node is slow or fails during request execution it will impact the SLA of whole request.
-        - Asynchronous Replication : Primary node can return the response one the changes is applied locally and propagate the change to secondary node in async. This will have low             latency and better fault tolerance. This can cause data consistency issues as all the nodes may not get updated in time or at all.
+    - Synchronous Replication: Primary node will wait to return the response till all secondary nodes have received the data.
+    So all nodes are always updated. This will cause high latency and low fault tolerance.
+    As even one node is slow or fails during request execution it will impact the SLA of whole request.
+    - Asynchronous Replication : Primary node can return the response one the changes is applied locally and propagate the
+    change to secondary node in async. This will have low latency and better fault tolerance. This can cause data consistency
+    issues as all the nodes may not get updated in time or at all.
     ````
     <a id="replication-strategies"></a>
   - ### Replication Stategies ###
