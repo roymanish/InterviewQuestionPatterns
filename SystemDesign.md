@@ -258,6 +258,13 @@ Replication refers to keeping multiple copies of the data at various nodes (pref
       ````
     - #### Peer-to-peer or leaderless replication ####
       ````
+      - All replicas have same weightage and all can handle writes.
+      - The issues replicated to replication lag and data inconsistency in previous strategies is handles here using quorums.
+      - In read request the request is considered successfull if certains number of replicas(r) are able to serve the same read data.
+      This makes sure that even if certain number of read replicas are not available the system is able to serve reads. And data consistency is resolved
+      by r replicas aggreeing on a particular value.
+      - In write requests if the certain number of replicas(w) are able to accept the writes then it is considered succesful. Agains conflicts are resolved by agreeing
+      on a single value.
       ````
 <a id="tcs-vs-udp"></a>
 ## TCP vs UDP ##
