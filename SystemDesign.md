@@ -42,6 +42,7 @@
     - [Topics/Queues](#topics-or-queues)
     - [Replication](#replication)
 - [Hashing](#hashing)
+- [Consistent Hashing](#consistent-hashing)
 - [References](#references)
 
 <a id="load-balancer"></a>
@@ -457,6 +458,17 @@ fixed-length value or key that represents and makes it easier to find or employ 
 Popular Hashing Functions :
   - MD5, SHA-1 - Commonly used, used to be secure, but no longer collision resistant
   - SHA-2 - Commonly used, secure. It's a family of functions with different output size.
+````
+<a id="consistent-hashing"></a>
+## Consistent Hashing ##
+````
+- Nodes are arranged in a logical ring structure.
+- For each node the nodeId is passed through a hash function and based on the hash value the node is placed on the ring.
+- When we receive a request, we take the key and pass it through same hash function and based on the value we map it on a place in ring.
+- The value is stored on the clockwise neighbour of the key location on the ring.
+- Sometime some nodes can become bottleneck due to uneven distribution of requests on the ring and many keys mapping to same neighbourhood on the ring.
+- To distribute the load evenly we can add virtual node. To achieve that we can pass the nodeId to multiple has functions and place the result value
+on multiple places on the ring. Based on hardware capacity some node can have more representation on the ring as they could handle more requests.
 ````
 <a id="references"></a>
 ## References ##
