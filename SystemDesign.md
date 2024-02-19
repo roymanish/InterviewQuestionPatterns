@@ -21,6 +21,9 @@
 - [Replication](#replication)
     - [Types of Replication](#replication-types)
     - [Replication Strategies](#replication-strategies)
+- [Sharding](#sharding)
+    - [Vertical Sharding](#vertical-sharding)
+    - [Horizontal Sharding](#horizontal-sharding)
 - [TCP vs UDP](#tcp-vs-udp)
     - [TCP](#tcp)
     - [UDP](#udp)
@@ -267,6 +270,20 @@ Replication refers to keeping multiple copies of the data at various nodes (pref
       - In write requests if the certain number of replicas(w) are able to accept the writes then it is considered succesful. Agains conflicts are resolved by agreeing
       on a single value.
       ````
+<a id="sharding"></a>
+## Sharding ##
+````
+Dividing data into smaller chunks in a balanced manner so that data is divided equally among separate nodes and traffic is also evenly distributed.
+````
+   <a id="vertical-sharding"></a>
+   - ### Vertical Sharding ###
+     ````
+     ````
+     <a id="horizontal-sharding"></a>
+   - ### Horizontal Sharding ###
+     ````
+     ````
+
 <a id="tcs-vs-udp"></a>
 ## TCP vs UDP ##
 
