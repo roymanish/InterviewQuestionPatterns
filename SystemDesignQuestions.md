@@ -1,5 +1,6 @@
 # System Design Questions #
 - [URL Shortener](#url-shortener)
+- [Distributed Cache](#distributed-cache)
 
 <a id="url-shortener"></a>
 ## URL Shortener ##
@@ -42,4 +43,30 @@ Steps :
   - Retrieve
       - Convert the shorten url back to the key using base conversion (from 62-base to 10-base);
       - Locate the server containing that key and return the longUrl.
+````
+<a id="distributed-cache"></a>
+## Distributed Cache ##
+![](https://github.com/roymanish/InterviewQuestionPatterns/blob/main/images/distributed-cache-lesson.png)
+
+### Diagram ###
+![](https://github.com/roymanish/InterviewQuestionPatterns/blob/main/images/distributed-cache.png)
+
+### Cache Writing Policies ###
+````
+ - Write-through cache: The write-through mechanism writes on the cache as well as on the database.
+Writing on both storages can happen concurrently or one after the other.
+This increases the write latency but ensures strong consistency between the database and the cache.
+ - Write-back cache: In the write-back cache mechanism, the data is first written to the cache and
+asynchronously written to the database. Although the cache has updated data, inconsistency is inevitable
+in scenarios where a client reads stale data from the database. However, systems using this strategy will have small writing latency.
+ - Write-around cache: This strategy involves writing data to the database only. Later, when a read is triggered for the data,
+it’s written to cache after a cache miss. The database will have updated data,
+but such a strategy isn’t favorable for reading recently updated data.
+````
+### Eviction Policies ###
+````
+ - Least recently used (LRU)
+ - Most recently used (MRU)
+ - Least frequently used (LFU)
+ - Most frequently used (MFU)
 ````
