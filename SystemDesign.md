@@ -217,7 +217,7 @@ Uses Bloom Filter to quickly find out if a SSTable contains a key or not
 <a id="durability"></a>
 ## Durability ##
 - Commit logs
-- Data redundancy
+- Data redundancy/replication (Multi-DC, Multi-AZ, Multi-Region)
 
 <a id="replication"></a>
 ## Replication ##
