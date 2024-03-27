@@ -1,6 +1,7 @@
 # System Design Questions #
 - [URL Shortener](#url-shortener)
 - [Distributed Cache](#distributed-cache)
+- [Web Crawler](#web-crawler)
 
 <a id="url-shortener"></a>
 ## URL Shortener ##
@@ -70,3 +71,22 @@ but such a strategy isn’t favorable for reading recently updated data.
  - Least frequently used (LFU)
  - Most frequently used (MFU)
 ````
+<a id="web-crawler"></a>
+## Web Crawler ##
+### Seed URLs ###
+````
+Seed URLs(Starting URLs) can be selected based on following criterias
+- Location based : Location where crawler is running
+- Category Based : Based on the content we want to scan
+- Popularity Based : Based on popularity of URLs
+
+````
+### Storing ###
+````
+System should be able to scan and store the extracted content into a blob store so that it can be later processed for Indexing and Ranking by search engines.
+````
+### Scheduling ###
+````
+Crawler should repeat in a scheduled manner.
+````
+
