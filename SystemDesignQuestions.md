@@ -99,3 +99,6 @@ Crawler should repeat in a scheduled manner.
 - URL validation and filtering to exclude URLs not eligible for crawling
 - Blob store to save parsed html content(key words for search ranking/indexes)
 
+### Diagram ###
+ ![](https://github.com/roymanish/InterviewQuestionPatterns/blob/main/images/web-crawler.png)
+
