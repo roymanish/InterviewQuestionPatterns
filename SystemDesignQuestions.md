@@ -96,5 +96,6 @@ Crawler should repeat in a scheduled manner.
 - DNS to fetch IPs for domains to be crawled
 - HTML content parser
 - Deduplication Service
+- URL validation and filtering to exclude URLs not eligible for crawling
 - Blob store to save parsed html content(key words for search ranking/indexes)
 
