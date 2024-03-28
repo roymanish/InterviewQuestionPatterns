@@ -89,4 +89,12 @@ System should be able to scan and store the extracted content into a blob store 
 ````
 Crawler should repeat in a scheduled manner.
 ````
+### Components ###
+- SeedURL Queue
+- URL Selector based on priority and recrawl frequency
+- HTML Downloader
+- DNS to fetch IPs for domains to be crawled
+- HTML content parser
+- Deduplication Service
+- Blob store to save parsed html content(key words for search ranking/indexes)
 
